@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos | Obsidiana Viva</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <img src="img/logo.png" alt="Obsidiana Viva Logo" class="logo">
+                <h1>OBSIDIANA VIVA</h1>
+                <p class="tagline">Joyería Artesanal de Lujo</p>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li><a href="sobre-nosotros.html" class="nav-link">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SECCIÓN DE FILTROS Y BÚSQUEDA -->
+    <section class="search-section">
+        <div class="container">
+            <h2>Nuestro Catálogo de Joyas</h2>
+            
+            <div class="search-bar">
+                <input type="text" id="buscador" placeholder="Busca por nombre de producto...">
+            </div>
+
+            <div class="filtros">
+                <button class="filtro-btn activo" data-categoria="todas">Todas las Categorías</button>
+                <button class="filtro-btn" data-categoria="Anillos">Anillos</button>
+                <button class="filtro-btn" data-categoria="Collares">Collares</button>
+                <button class="filtro-btn" data-categoria="Pulseras">Pulseras</button>
+                <button class="filtro-btn" data-categoria="Aretes">Aretes</button>
+                <button class="filtro-btn" data-categoria="Broches">Broches</button>
+                <button class="filtro-btn" data-categoria="Gargantillas">Gargantillas</button>
+                <button class="filtro-btn" data-categoria="Cadenas">Cadenas</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE PRODUCTOS -->
+    <section class="productos-section">
+        <div class="container">
+            <div id="productos-grid" class="productos-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Obsidiana Viva - Joyería Artesanal. Todos los derechos reservados.</p>
+            <p>Hecho con ❤️ para ti</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
