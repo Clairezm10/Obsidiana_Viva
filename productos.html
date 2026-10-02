@@ -6,7 +6,9 @@
     <title>Productos | Obsidiana Viva</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="has-video">
+    <video class="page-video" autoplay muted loop playsinline aria-hidden="true" tabindex="-1"><source src="img/fondo.mp4" type="video/mp4"></video>
+    <div class="page-video-overlay"></div>
     <!-- HEADER / NAVEGACIÓN -->
     <header class="header">
         <div class="container">
@@ -18,11 +20,12 @@
             <nav class="navbar">
                 <ul>
                     <li><a href="index.html" class="nav-link">Inicio</a></li>
-                    <li><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li><a href="productos.html" class="nav-link" aria-current="page">Productos</a></li>
                     <li><a href="sobre-nosotros.html" class="nav-link">Sobre Nosotros</a></li>
                     <li><a href="contacto.html" class="nav-link">Contacto</a></li>
                 </ul>
             </nav>
+            <button type="button" class="motion-toggle" aria-pressed="false">Reducir movimiento</button>
         </div>
     </header>
 
@@ -32,30 +35,62 @@
             <h2>Nuestro Catálogo de Joyas</h2>
             
             <div class="search-bar">
-                <input type="text" id="buscador" placeholder="Busca por nombre de producto...">
+                <label for="buscador">Buscar joyas</label>
+                <input type="search" id="buscador" placeholder="Ej.: anillo de obsidiana" autocomplete="off">
             </div>
 
             <div class="filtros">
-                <button class="filtro-btn activo" data-categoria="todas">Todas las Categorías</button>
-                <button class="filtro-btn" data-categoria="Anillos">Anillos</button>
-                <button class="filtro-btn" data-categoria="Collares">Collares</button>
-                <button class="filtro-btn" data-categoria="Pulseras">Pulseras</button>
-                <button class="filtro-btn" data-categoria="Aretes">Aretes</button>
-                <button class="filtro-btn" data-categoria="Broches">Broches</button>
-                <button class="filtro-btn" data-categoria="Gargantillas">Gargantillas</button>
-                <button class="filtro-btn" data-categoria="Cadenas">Cadenas</button>
+                <button type="button" class="filtro-btn activo" data-categoria="todas" aria-pressed="true">Todas las categorías</button>
+                <button type="button" class="filtro-btn" data-categoria="Anillos" aria-pressed="false">Anillos</button>
+                <button type="button" class="filtro-btn" data-categoria="Collares" aria-pressed="false">Collares</button>
+                <button type="button" class="filtro-btn" data-categoria="Pulseras" aria-pressed="false">Pulseras</button>
+                <button type="button" class="filtro-btn" data-categoria="Aretes" aria-pressed="false">Aretes</button>
+                <button type="button" class="filtro-btn" data-categoria="Broches" aria-pressed="false">Broches</button>
+                <button type="button" class="filtro-btn" data-categoria="Gargantillas" aria-pressed="false">Gargantillas</button>
+                <button type="button" class="filtro-btn" data-categoria="Cadenas" aria-pressed="false">Cadenas</button>
             </div>
+            <div class="catalogo-tools"><p id="resultado-conteo" aria-live="polite" role="status"></p><button type="button" id="limpiar-filtros" class="btn btn-secondary">Limpiar búsqueda y filtros</button></div>
+            <p class="datos-demo">Precios, existencias, tallas y colores son datos de demostración; en este catálogo todas las variantes están disponibles.</p>
         </div>
     </section>
 
     <!-- SECCIÓN DE PRODUCTOS -->
     <section class="productos-section">
         <div class="container">
-            <div id="productos-grid" class="productos-grid">
+            <div id="productos-grid" class="productos-grid" aria-live="polite">
                 <!-- Los productos se cargarán aquí con JavaScript -->
             </div>
         </div>
     </section>
+
+    <dialog id="producto-dialog" class="producto-dialog" aria-labelledby="dialog-producto-nombre">
+        <button type="button" class="dialog-cerrar" aria-label="Cerrar detalles">&times;</button>
+        <div class="dialog-contenido">
+            <img id="dialog-producto-imagen" class="dialog-imagen" src="" alt="">
+            <div class="dialog-informacion">
+                <p id="dialog-producto-categoria" class="producto-categoria"></p>
+                <h2 id="dialog-producto-nombre"></h2>
+                <p id="dialog-producto-descripcion"></p>
+                <p id="dialog-producto-precio" class="producto-precio"></p>
+                <p id="dialog-producto-stock" class="producto-stock"></p>
+                <fieldset class="dialog-variantes">
+                    <legend>Talla o medida</legend>
+                    <div id="dialog-tallas" class="tallas-opciones" role="group" aria-label="Elige talla o medida"></div>
+                </fieldset>
+                <div class="producto-variante dialog-color">
+                    <label for="dialog-color-select">Color o acabado</label>
+                    <select id="dialog-color-select">
+                        <option value="">Elige un color</option>
+                    </select>
+                </div>
+                <p class="variante-ayuda">Opciones de ejemplo para este proyecto. Todas están disponibles.</p>
+                <div class="producto-acciones">
+                    <button type="button" class="btn btn-favorito" id="dialog-favorito" aria-pressed="false">♡ Agregar a Favoritos</button>
+                    <a class="btn btn-primary" id="dialog-reservar" href="reservar.html">Reservar</a>
+                </div>
+            </div>
+        </div>
+    </dialog>
 
     <!-- FOOTER -->
     <footer class="footer">

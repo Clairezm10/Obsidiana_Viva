@@ -6,7 +6,9 @@
     <title>Sobre Nosotros | Obsidiana Viva</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="has-video">
+    <video class="page-video" autoplay muted loop playsinline aria-hidden="true" tabindex="-1"><source src="img/fondo.mp4" type="video/mp4"></video>
+    <div class="page-video-overlay"></div>
     <!-- HEADER / NAVEGACIÓN -->
     <header class="header">
         <div class="container">
@@ -19,23 +21,25 @@
                 <ul>
                     <li><a href="index.html" class="nav-link">Inicio</a></li>
                     <li><a href="productos.html" class="nav-link">Productos</a></li>
-                    <li><a href="sobre-nosotros.html" class="nav-link">Sobre Nosotros</a></li>
+                    <li><a href="sobre-nosotros.html" class="nav-link" aria-current="page">Sobre Nosotros</a></li>
                     <li><a href="contacto.html" class="nav-link">Contacto</a></li>
                 </ul>
             </nav>
+            <button type="button" class="motion-toggle" aria-pressed="false">Reducir movimiento</button>
         </div>
     </header>
 
     <!-- SECCIÓN ABOUT HERO -->
-    <section class="about-hero">
+    <section class="about-hero reveal">
         <div class="container">
             <h1>Sobre Obsidiana Viva</h1>
             <p>Descubre la historia detrás de nuestras joyas artesanales</p>
+            <p class="datos-demo">Historia, materiales y compromisos descritos como parte de este proyecto escolar.</p>
         </div>
     </section>
 
     <!-- SECCIÓN HISTORIA -->
-    <section class="historia-section">
+    <section class="historia-section reveal">
         <div class="container">
             <div class="historia-content">
                 <h2>Nuestra Historia</h2>
@@ -56,7 +60,7 @@
     </section>
 
     <!-- SECCIÓN MISION VISION -->
-    <section class="mision-vision">
+    <section class="mision-vision reveal">
         <div class="container">
             <div class="mision-card">
                 <h3>🎯 Nuestra Misión</h3>
@@ -76,7 +80,7 @@
     </section>
 
     <!-- SECCIÓN VALORES -->
-    <section class="valores-section">
+    <section class="valores-section reveal">
         <div class="container">
             <h2>Nuestros Valores</h2>
             <div class="valores-grid">
@@ -127,7 +131,7 @@
     </section>
 
     <!-- SECCIÓN MATERIALES -->
-    <section class="materiales-section">
+    <section class="materiales-section reveal">
         <div class="container">
             <h2>Nuestros Materiales</h2>
             <p class="materiales-intro">
@@ -187,5 +191,6 @@
             <p>Hecho con ❤️ para ti</p>
         </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

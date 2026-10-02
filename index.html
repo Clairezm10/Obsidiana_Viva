@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="home has-video">
-    <video class="page-video" autoplay muted loop playsinline poster="img/banner.jpg">
+    <video class="page-video" autoplay muted loop playsinline aria-hidden="true" tabindex="-1">
         <source src="img/fondo.mp4" type="video/mp4">
     </video>
     <div class="page-video-overlay"></div>
@@ -21,12 +21,13 @@
             </div>
             <nav class="navbar">
                 <ul>
-                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="index.html" class="nav-link" aria-current="page">Inicio</a></li>
                     <li><a href="productos.html" class="nav-link">Productos</a></li>
                     <li><a href="sobre-nosotros.html" class="nav-link">Sobre Nosotros</a></li>
                     <li><a href="contacto.html" class="nav-link">Contacto</a></li>
                 </ul>
             </nav>
+            <button type="button" class="motion-toggle" aria-pressed="false">Reducir movimiento</button>
         </div>
     </header>
 
@@ -74,48 +75,48 @@
         <div class="container">
             <h2 class="reveal">Nuestras Colecciones</h2>
             <div class="categorias-grid">
-                <div class="categoria-card reveal reveal-delay-1">
+                <a class="categoria-card reveal reveal-delay-1" href="productos.html?categoria=Anillos">
                     <div class="categoria-imagen">
                         <img src="img/coleccion-anillos.jpg" alt="Anillos">
                     </div>
                     <h3>Anillos</h3>
                     <p>Anillos de diamante, piedras preciosas y metales finos</p>
-                </div>
-                <div class="categoria-card reveal reveal-delay-2">
+                </a>
+                <a class="categoria-card reveal reveal-delay-2" href="productos.html?categoria=Collares">
                     <div class="categoria-imagen">
                         <img src="img/coleccion-collares.jpg" alt="Collares">
                     </div>
                     <h3>Collares</h3>
                     <p>Collares elegantes en oro, plata y piedras naturales</p>
-                </div>
-                <div class="categoria-card reveal reveal-delay-3">
+                </a>
+                <a class="categoria-card reveal reveal-delay-3" href="productos.html?categoria=Pulseras">
                     <div class="categoria-imagen">
                         <img src="img/coleccion-pulseras.jpg" alt="Pulseras">
                     </div>
                     <h3>Pulseras</h3>
                     <p>Pulseras y brazaletes para todas las ocasiones</p>
-                </div>
-                <div class="categoria-card reveal reveal-delay-4">
+                </a>
+                <a class="categoria-card reveal reveal-delay-4" href="productos.html?categoria=Aretes">
                     <div class="categoria-imagen">
                         <img src="img/coleccion-aretes.jpg" alt="Aretes">
                     </div>
                     <h3>Aretes</h3>
                     <p>Aretes y pendientes con diseños exclusivos</p>
-                </div>
-                <div class="categoria-card reveal reveal-delay-5">
+                </a>
+                <a class="categoria-card reveal reveal-delay-5" href="productos.html?categoria=Broches">
                     <div class="categoria-imagen">
                         <img src="img/coleccion-accesorios.jpg" alt="Accesorios">
                     </div>
-                    <h3>Accesorios</h3>
-                    <p>Broches, gargantillas y cadenas decorativas</p>
-                </div>
-                <div class="categoria-card reveal reveal-delay-6">
+                    <h3>Broches</h3>
+                    <p>Broches decorativos para ocasiones especiales</p>
+                </a>
+                <a class="categoria-card reveal reveal-delay-6" href="productos.html?categoria=Cadenas">
                     <div class="categoria-imagen">
                         <img src="img/coleccion-cadenas.jpg" alt="Cadenas">
                     </div>
                     <h3>Cadenas</h3>
                     <p>Cadenas de diversos estilos y materiales</p>
-                </div>
+                </a>
             </div>
             <div class="cta-section reveal">
                 <p>Explora nuestro catálogo completo de joyas</p>

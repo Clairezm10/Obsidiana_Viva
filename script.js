@@ -272,12 +272,21 @@ const productos = [
 
 // ===== VARIABLES GLOBALES =====
 let categoriaActual = 'todas';
+let terminoActual = '';
+const categoriasValidas = ['Anillos', 'Collares', 'Pulseras', 'Aretes', 'Broches', 'Gargantillas', 'Cadenas'];
+const obtenerFavoritos = () => {
+    try { return JSON.parse(localStorage.getItem('obsidiana-favoritos') || '[]'); }
+    catch { return []; }
+};
 
 // ===== ELEMENTOS DEL DOM =====
 const productosGrid = document.getElementById('productos-grid');
 const buscador = document.getElementById('buscador');
 const filtrosBtns = document.querySelectorAll('.filtro-btn');
 const contactoForm = document.getElementById('contacto-form');
+const reservaForm = document.getElementById('reserva-form');
+const productoDialog = document.getElementById('producto-dialog');
+let productoActivoDialog = null;
 
 // ===== FUNCIONES PRINCIPALES =====
 
@@ -287,17 +296,15 @@ function renderizarProductos(productosAMostrar = productos) {
     productosGrid.innerHTML = '';
 
     if (productosAMostrar.length === 0) {
-        productosGrid.innerHTML = '<p class="sin-resultados">No se encontraron productos</p>';
+        productosGrid.innerHTML = '<div class="sin-resultados"><p>No encontramos joyas con esos criterios.</p><button type="button" class="btn btn-secondary" id="sin-resultados-limpiar">Ver todo el catálogo</button></div>';
+        document.getElementById('sin-resultados-limpiar').addEventListener('click', limpiarFiltros);
         return;
     }
 
     productosAMostrar.forEach((producto, index) => {
-        const productoCard = document.createElement('div');
+        const productoCard = document.createElement('article');
         const delayClass = `reveal-delay-${(index % 6) + 1}`;
         productoCard.className = `producto-card reveal ${delayClass}`;
-
-        const stockClass = producto.stock < 5 ? 'stock-bajo' : 'stock-disponible';
-        const stockText = producto.stock < 5 ? `¡Solo ${producto.stock} disponibles!` : `${producto.stock} disponibles`;
 
         productoCard.innerHTML = `
             <div class="producto-imagen">
@@ -306,16 +313,137 @@ function renderizarProductos(productosAMostrar = productos) {
             <div class="producto-info">
                 <p class="producto-categoria">${producto.categoria}</p>
                 <h3 class="producto-nombre">${producto.nombre}</h3>
-                <p class="producto-descripcion">${producto.descripcion}</p>
                 <p class="producto-precio">$${producto.precio.toFixed(2)}</p>
-                <p class="producto-stock"><span class="${stockClass}">${stockText}</span></p>
+                <button type="button" class="btn btn-secondary ver-detalles" data-detalles="${producto.id}" aria-haspopup="dialog">Ver detalles</button>
             </div>
         `;
 
         productosGrid.appendChild(productoCard);
     });
 
+    productosGrid.querySelectorAll('[data-detalles]').forEach(boton => {
+        boton.addEventListener('click', () => abrirDetallesProducto(Number(boton.dataset.detalles)));
+    });
     observarElementos();
+}
+
+function variantesPara(producto) {
+    const medidasPorCategoria = {
+        Anillos: ['5', '6', '7', '8', '9', '10'],
+        Pulseras: ['16 cm', '17 cm', '18 cm', '19 cm', '20 cm', 'Ajustable'],
+        Collares: ['40 cm', '45 cm', '50 cm', '55 cm', '60 cm'],
+        Gargantillas: ['35 cm', '40 cm', '45 cm', 'Ajustable'],
+        Cadenas: ['40 cm', '45 cm', '50 cm', '55 cm', '60 cm'],
+        Aretes: ['Única'],
+        Broches: ['Única']
+    };
+    const texto = normalizar(`${producto.nombre} ${producto.descripcion}`);
+    let colores = ['Dorado', 'Plateado', 'Negro'];
+    if (texto.includes('oro blanco')) colores = ['Oro blanco', 'Dorado', 'Oro rosa'];
+    else if (texto.includes('oro')) colores = ['Dorado', 'Oro blanco', 'Oro rosa'];
+    else if (texto.includes('plata')) colores = ['Plateado', 'Dorado', 'Negro'];
+    else if (texto.includes('obsidiana')) colores = ['Negro', 'Plateado', 'Dorado'];
+    else if (texto.includes('piedra') || texto.includes('amatista') || texto.includes('opal') || texto.includes('diamante') || texto.includes('perla') || texto.includes('jade') || texto.includes('turquesa')) colores = ['Tono original', 'Dorado', 'Plateado'];
+    return { medidas: medidasPorCategoria[producto.categoria] || ['Única'], colores };
+}
+
+function abrirDetallesProducto(id) {
+    if (!productoDialog) return;
+    const producto = productos.find(p => p.id === id);
+    if (!producto) return;
+    productoActivoDialog = producto;
+    const variantes = variantesPara(producto);
+    const stockClass = producto.stock < 5 ? 'stock-bajo' : 'stock-disponible';
+    const stockText = producto.stock < 5 ? `Pocas existencias: ${producto.stock}` : `${producto.stock} disponibles`;
+    document.getElementById('dialog-producto-imagen').src = producto.imagen;
+    document.getElementById('dialog-producto-imagen').alt = producto.nombre;
+    document.getElementById('dialog-producto-categoria').textContent = producto.categoria;
+    document.getElementById('dialog-producto-nombre').textContent = producto.nombre;
+    document.getElementById('dialog-producto-descripcion').textContent = producto.descripcion;
+    document.getElementById('dialog-producto-precio').textContent = `$${producto.precio.toFixed(2)}`;
+    document.getElementById('dialog-producto-stock').innerHTML = `<span class="${stockClass}">${stockText}</span>`;
+
+    const tallas = document.getElementById('dialog-tallas');
+    tallas.innerHTML = variantes.medidas.map((medida, index) => `<button type="button" class="talla-opcion${index === 0 ? ' seleccionada' : ''}" aria-pressed="${index === 0}" data-talla="${medida}">${medida}</button>`).join('');
+    tallas.querySelectorAll('[data-talla]').forEach(boton => boton.addEventListener('click', () => {
+        tallas.querySelectorAll('[data-talla]').forEach(opcion => {
+            const seleccionada = opcion === boton;
+            opcion.classList.toggle('seleccionada', seleccionada);
+            opcion.setAttribute('aria-pressed', String(seleccionada));
+        });
+    }));
+
+    const selectorColor = document.getElementById('dialog-color-select');
+    selectorColor.innerHTML = '<option value="">Elige un color</option>' + variantes.colores.map(color => `<option value="${color}">${color}</option>`).join('');
+    const favoritos = obtenerFavoritos();
+    const botonFavorito = document.getElementById('dialog-favorito');
+    const esFavorito = favoritos.includes(producto.id);
+    botonFavorito.textContent = esFavorito ? '♥ En favoritos' : '♡ Agregar a Favoritos';
+    botonFavorito.classList.toggle('guardado', esFavorito);
+    botonFavorito.setAttribute('aria-pressed', String(esFavorito));
+    document.getElementById('dialog-reservar').href = `reservar.html?producto=${producto.id}`;
+    productoDialog.showModal();
+}
+
+document.querySelector('.dialog-cerrar')?.addEventListener('click', () => productoDialog.close());
+productoDialog?.addEventListener('click', event => {
+    if (event.target === productoDialog) productoDialog.close();
+});
+
+document.getElementById('dialog-favorito')?.addEventListener('click', event => {
+    if (!productoActivoDialog) return;
+    const boton = event.currentTarget;
+    const favoritos = obtenerFavoritos();
+    const id = productoActivoDialog.id;
+    const nuevos = favoritos.includes(id) ? favoritos.filter(f => f !== id) : [...favoritos, id];
+    localStorage.setItem('obsidiana-favoritos', JSON.stringify(nuevos));
+    const esFavorito = nuevos.includes(id);
+    boton.textContent = esFavorito ? '♥ En favoritos' : '♡ Agregar a Favoritos';
+    boton.classList.toggle('guardado', esFavorito);
+    boton.setAttribute('aria-pressed', String(esFavorito));
+});
+
+document.getElementById('dialog-reservar')?.addEventListener('click', event => {
+    if (!productoActivoDialog) return;
+    const parametros = new URLSearchParams({ producto: String(productoActivoDialog.id) });
+    const tallaSeleccionada = productoDialog.querySelector('[data-talla][aria-pressed="true"]');
+    const colorSeleccionado = document.getElementById('dialog-color-select').value;
+    if (tallaSeleccionada) parametros.set('talla', tallaSeleccionada.dataset.talla);
+    if (colorSeleccionado) parametros.set('color', colorSeleccionado);
+    event.currentTarget.href = `reservar.html?${parametros.toString()}`;
+});
+
+function normalizar(texto) {
+    return texto.toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function actualizarUrl() {
+    if (!productosGrid) return;
+    const url = new URL(window.location.href);
+    if (categoriaActual === 'todas') url.searchParams.delete('categoria');
+    else url.searchParams.set('categoria', categoriaActual);
+    if (terminoActual) url.searchParams.set('q', terminoActual);
+    else url.searchParams.delete('q');
+    if (window.location.protocol !== 'file:') history.replaceState(null, '', url);
+}
+
+function alternarFavorito(id) {
+    const favoritos = obtenerFavoritos();
+    const nuevos = favoritos.includes(id) ? favoritos.filter(f => f !== id) : [...favoritos, id];
+    localStorage.setItem('obsidiana-favoritos', JSON.stringify(nuevos));
+    filtrarProductos();
+}
+
+function limpiarFiltros() {
+    categoriaActual = 'todas';
+    terminoActual = '';
+    if (buscador) buscador.value = '';
+    filtrosBtns.forEach(b => {
+        const activo = b.dataset.categoria === 'todas';
+        b.classList.toggle('activo', activo);
+        b.setAttribute('aria-pressed', String(activo));
+    });
+    filtrarProductos();
 }
 
 function filtrarProductos() {
@@ -326,15 +454,20 @@ function filtrarProductos() {
     }
 
     if (buscador) {
-        const terminoBusqueda = buscador.value.toLowerCase();
+        const terminoBusqueda = normalizar(buscador.value.trim());
+        terminoActual = buscador.value.trim();
         if (terminoBusqueda) {
             productosFiltrados = productosFiltrados.filter(p =>
-                p.nombre.toLowerCase().includes(terminoBusqueda) ||
-                p.descripcion.toLowerCase().includes(terminoBusqueda)
+                normalizar(p.nombre).includes(terminoBusqueda) ||
+                normalizar(p.descripcion).includes(terminoBusqueda) ||
+                normalizar(p.categoria).includes(terminoBusqueda)
             );
         }
     }
 
+    actualizarUrl();
+    const conteo = document.getElementById('resultado-conteo');
+    if (conteo) conteo.textContent = `${productosFiltrados.length} ${productosFiltrados.length === 1 ? 'joya encontrada' : 'joyas encontradas'}`;
     renderizarProductos(productosFiltrados);
 }
 
@@ -343,6 +476,7 @@ filtrosBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         filtrosBtns.forEach(b => b.classList.remove('activo'));
         btn.classList.add('activo');
+        filtrosBtns.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
         categoriaActual = btn.dataset.categoria;
         filtrarProductos();
     });
@@ -352,11 +486,32 @@ if (buscador) {
     buscador.addEventListener('input', filtrarProductos);
 }
 
+const limpiarBtn = document.getElementById('limpiar-filtros');
+if (limpiarBtn) limpiarBtn.addEventListener('click', limpiarFiltros);
+
 if (contactoForm) {
     contactoForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('✅ ¡Mensaje enviado! Te contactaremos pronto.');
+        alert('Gracias por tu interés. Este formulario es una demostración escolar y no envía mensajes.');
         contactoForm.reset();
+    });
+}
+
+if (reservaForm) {
+    const parametrosReserva = new URLSearchParams(window.location.search);
+    const productoParam = Number(parametrosReserva.get('producto'));
+    const producto = productos.find(p => p.id === productoParam);
+    const elegido = document.getElementById('producto-reserva');
+    if (producto && elegido) elegido.value = producto.nombre;
+    const tallaReserva = document.getElementById('reserva-talla');
+    const colorReserva = document.getElementById('reserva-color');
+    if (tallaReserva) tallaReserva.value = parametrosReserva.get('talla') || '';
+    if (colorReserva) colorReserva.value = parametrosReserva.get('color') || '';
+    reservaForm.addEventListener('submit', e => {
+        e.preventDefault();
+        alert('Tu solicitud de reserva quedó registrada en esta demostración. No se envió información.');
+        reservaForm.reset();
+        if (producto && elegido) elegido.value = producto.nombre;
     });
 }
 
@@ -383,7 +538,18 @@ function observarElementos() {
 
 // ===== INICIALIZACIÓN =====
 if (productosGrid) {
+    const categoriaUrl = new URLSearchParams(window.location.search).get('categoria');
+    const busquedaUrl = new URLSearchParams(window.location.search).get('q') || '';
+    if (categoriasValidas.includes(categoriaUrl)) categoriaActual = categoriaUrl;
+    if (buscador) buscador.value = busquedaUrl;
+    terminoActual = busquedaUrl;
+    filtrosBtns.forEach(b => {
+        const activo = b.dataset.categoria === categoriaActual;
+        b.classList.toggle('activo', activo);
+        b.setAttribute('aria-pressed', String(activo));
+    });
     renderizarProductos();
+    filtrarProductos();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -398,11 +564,43 @@ document.addEventListener('DOMContentLoaded', () => {
         onScroll();
     }
 
-    const heroVideo = document.querySelector('.hero-video');
-    if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        heroVideo.pause();
-        heroVideo.removeAttribute('autoplay');
-    }
 });
 
+const motionButtons = document.querySelectorAll('.motion-toggle');
+const movimientoGuardado = localStorage.getItem('obsidiana-reducir-movimiento');
+const sistemaReduceMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let movimientoReducido = movimientoGuardado === null ? sistemaReduceMovimiento : movimientoGuardado === 'true';
+
+function aplicarPreferenciaMovimiento() {
+    document.body.classList.toggle('motion-reduced', movimientoReducido);
+    document.documentElement.classList.toggle('motion-reduced', movimientoReducido);
+    document.body.classList.toggle('motion-enabled', !movimientoReducido);
+    const video = document.querySelector('.page-video');
+    if (video) {
+        if (movimientoReducido) {
+            video.pause();
+            video.removeAttribute('autoplay');
+            video.hidden = true;
+        } else {
+            video.hidden = false;
+            video.setAttribute('autoplay', '');
+            video.play().catch(() => {});
+        }
+    }
+    motionButtons.forEach(button => {
+        button.setAttribute('aria-pressed', String(movimientoReducido));
+        button.textContent = movimientoReducido ? 'Activar movimiento' : 'Reducir movimiento';
+    });
+}
+
+motionButtons.forEach(button => button.addEventListener('click', () => {
+    movimientoReducido = !movimientoReducido;
+    localStorage.setItem('obsidiana-reducir-movimiento', String(movimientoReducido));
+    aplicarPreferenciaMovimiento();
+}));
+aplicarPreferenciaMovimiento();
+
+document.querySelectorAll('.contacto-info-card, .mision-card, .vision-card, .valor-card, .material-card').forEach((elemento, index) => {
+    elemento.classList.add('reveal', `reveal-delay-${(index % 6) + 1}`);
+});
 observarElementos();

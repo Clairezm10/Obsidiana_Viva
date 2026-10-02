@@ -6,7 +6,9 @@
     <title>Contacto | Obsidiana Viva</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="has-video">
+    <video class="page-video" autoplay muted loop playsinline aria-hidden="true" tabindex="-1"><source src="img/fondo.mp4" type="video/mp4"></video>
+    <div class="page-video-overlay"></div>
     <!-- HEADER / NAVEGACIÓN -->
     <header class="header">
         <div class="container">
@@ -20,14 +22,15 @@
                     <li><a href="index.html" class="nav-link">Inicio</a></li>
                     <li><a href="productos.html" class="nav-link">Productos</a></li>
                     <li><a href="sobre-nosotros.html" class="nav-link">Sobre Nosotros</a></li>
-                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                    <li><a href="contacto.html" class="nav-link" aria-current="page">Contacto</a></li>
                 </ul>
             </nav>
+            <button type="button" class="motion-toggle" aria-pressed="false">Reducir movimiento</button>
         </div>
     </header>
 
     <!-- SECCIÓN CONTACTO HERO -->
-    <section class="contacto-hero">
+    <section class="contacto-hero reveal">
         <div class="container">
             <h1>Contáctanos</h1>
             <p>¿Tienes preguntas? Nos encantaría escucharte</p>
@@ -35,7 +38,7 @@
     </section>
 
     <!-- SECCIÓN DE INFORMACIÓN DE CONTACTO -->
-    <section class="info-contacto">
+    <section class="info-contacto reveal">
         <div class="container">
             <h2>Información de Contacto</h2>
             <div class="contacto-grid">
@@ -45,11 +48,11 @@
                 </div>
                 <div class="contacto-info-card">
                     <h3>📞 Teléfono</h3>
-                    <p>+503 1234-5678</p>
+                    <p><a href="tel:+50312345678">+503 1234-5678</a></p>
                 </div>
                 <div class="contacto-info-card">
                     <h3>📧 Gmail</h3>
-                    <p>obsidianaviva@gmail.com</p>
+                    <p><a href="mailto:obsidianaviva@gmail.com">obsidianaviva@gmail.com</a></p>
                 </div>
                 <div class="contacto-info-card">
                     <h3>🕐 Horario</h3>
@@ -61,9 +64,10 @@
     </section>
 
     <!-- SECCIÓN DEL FORMULARIO -->
-    <section class="formulario-contacto">
+    <section class="formulario-contacto reveal">
         <div class="container">
             <h2>Envíanos un Mensaje</h2>
+            <p class="form-demo-note">Este formulario es una demostración escolar: no envía mensajes.</p>
             <form id="contacto-form" class="contacto-form-grande">
                 <div class="form-group">
                     <label for="nombre">Nombre Completo *</label>
@@ -96,15 +100,15 @@
     </section>
 
     <!-- SECCIÓN DE REDES SOCIALES -->
-    <section class="redes-sociales">
+    <section class="redes-sociales reveal">
         <div class="container">
             <h2>Síguenos en Redes Sociales</h2>
             <p>Mantente conectado con nuestras últimas colecciones y noticias</p>
             <div class="redes-links">
-                <a href="#" class="red-social-btn">📱 Instagram</a>
-                <a href="#" class="red-social-btn">👍 Facebook</a>
-                <a href="#" class="red-social-btn">🎵 TikTok</a>
-                <a href="#" class="red-social-btn">📌 Pinterest</a>
+                <a href="https://www.instagram.com/" class="red-social-btn" target="_blank" rel="noopener noreferrer">📱 Instagram</a>
+                <a href="https://www.facebook.com/" class="red-social-btn" target="_blank" rel="noopener noreferrer">👍 Facebook</a>
+                <a href="https://www.tiktok.com/" class="red-social-btn" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>
+                <a href="https://www.pinterest.com/" class="red-social-btn" target="_blank" rel="noopener noreferrer">📌 Pinterest</a>
             </div>
         </div>
     </section>
