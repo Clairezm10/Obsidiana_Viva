@@ -6,9 +6,13 @@
     <title>Obsidiana Viva | Joyería Artesanal</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <!-- HEADER / NAVEGACIÓN -->
-    <header class="header">
+<body class="home has-video">
+    <video class="page-video" autoplay muted loop playsinline poster="img/banner.jpg">
+        <source src="img/fondo.mp4" type="video/mp4">
+    </video>
+    <div class="page-video-overlay"></div>
+
+    <header class="header header-over-video">
         <div class="container">
             <div class="logo-section">
                 <img src="img/logo.png" alt="Obsidiana Viva Logo" class="logo">
@@ -26,7 +30,6 @@
         </div>
     </header>
 
-    <!-- SECCIÓN HERO / BANNER -->
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
@@ -37,30 +40,29 @@
         </div>
     </section>
 
-    <!-- SECCIÓN DE INTRODUCCIÓN -->
     <section class="intro-section">
         <div class="container">
-            <h2>Bienvenido a Obsidiana Viva</h2>
-            <p class="intro-text">
-                En Obsidiana Viva nos especializamos en la creación de joyas artesanales únicas y de alta calidad. 
-                Cada pieza es cuidadosamente diseñada y elaborada con los mejores materiales, reflejando elegancia 
+            <h2 class="reveal">Bienvenido a Obsidiana Viva</h2>
+            <p class="intro-text reveal reveal-delay-1">
+                En Obsidiana Viva nos especializamos en la creación de joyas artesanales únicas y de alta calidad.
+                Cada pieza es cuidadosamente diseñada y elaborada con los mejores materiales, reflejando elegancia
                 y sofisticación en cada detalle.
             </p>
-            
+
             <div class="caracteristicas-grid">
-                <div class="caracteristica-card">
+                <div class="caracteristica-card reveal reveal-delay-1">
                     <h3>✨ Artesanal</h3>
                     <p>Cada joya es hecha a mano con precisión y dedicación</p>
                 </div>
-                <div class="caracteristica-card">
+                <div class="caracteristica-card reveal reveal-delay-2">
                     <h3>💎 Premium</h3>
                     <p>Utilizamos únicamente materiales de la más alta calidad</p>
                 </div>
-                <div class="caracteristica-card">
+                <div class="caracteristica-card reveal reveal-delay-3">
                     <h3>🎨 Único</h3>
                     <p>Diseños exclusivos que te harán brillar</p>
                 </div>
-                <div class="caracteristica-card">
+                <div class="caracteristica-card reveal reveal-delay-4">
                     <h3>💜 Elegancia</h3>
                     <p>Sofisticación y estilo en cada colección</p>
                 </div>
@@ -68,55 +70,67 @@
         </div>
     </section>
 
-    <!-- SECCIÓN DE CATEGORÍAS DESTACADAS -->
     <section class="categorias-section">
         <div class="container">
-            <h2>Nuestras Colecciones</h2>
+            <h2 class="reveal">Nuestras Colecciones</h2>
             <div class="categorias-grid">
-                <div class="categoria-card">
-                    <div class="categoria-icon">💍</div>
+                <div class="categoria-card reveal reveal-delay-1">
+                    <div class="categoria-imagen">
+                        <img src="img/coleccion-anillos.jpg" alt="Anillos">
+                    </div>
                     <h3>Anillos</h3>
                     <p>Anillos de diamante, piedras preciosas y metales finos</p>
                 </div>
-                <div class="categoria-card">
-                    <div class="categoria-icon">✨</div>
+                <div class="categoria-card reveal reveal-delay-2">
+                    <div class="categoria-imagen">
+                        <img src="img/coleccion-collares.jpg" alt="Collares">
+                    </div>
                     <h3>Collares</h3>
                     <p>Collares elegantes en oro, plata y piedras naturales</p>
                 </div>
-                <div class="categoria-card">
-                    <div class="categoria-icon">⌚</div>
+                <div class="categoria-card reveal reveal-delay-3">
+                    <div class="categoria-imagen">
+                        <img src="img/coleccion-pulseras.jpg" alt="Pulseras">
+                    </div>
                     <h3>Pulseras</h3>
                     <p>Pulseras y brazaletes para todas las ocasiones</p>
                 </div>
-                <div class="categoria-card">
-                    <div class="categoria-icon">💎</div>
+                <div class="categoria-card reveal reveal-delay-4">
+                    <div class="categoria-imagen">
+                        <img src="img/coleccion-aretes.jpg" alt="Aretes">
+                    </div>
                     <h3>Aretes</h3>
                     <p>Aretes y pendientes con diseños exclusivos</p>
                 </div>
-                <div class="categoria-card">
-                    <div class="categoria-icon">🎀</div>
+                <div class="categoria-card reveal reveal-delay-5">
+                    <div class="categoria-imagen">
+                        <img src="img/coleccion-accesorios.jpg" alt="Accesorios">
+                    </div>
                     <h3>Accesorios</h3>
                     <p>Broches, gargantillas y cadenas decorativas</p>
                 </div>
-                <div class="categoria-card">
-                    <div class="categoria-icon">🔗</div>
+                <div class="categoria-card reveal reveal-delay-6">
+                    <div class="categoria-imagen">
+                        <img src="img/coleccion-cadenas.jpg" alt="Cadenas">
+                    </div>
                     <h3>Cadenas</h3>
                     <p>Cadenas de diversos estilos y materiales</p>
                 </div>
             </div>
-            <div class="cta-section">
+            <div class="cta-section reveal">
                 <p>Explora nuestro catálogo completo de joyas</p>
                 <a href="productos.html" class="btn btn-primary">Ver Todos los Productos</a>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 Obsidiana Viva - Joyería Artesanal. Todos los derechos reservados.</p>
             <p>Hecho con ❤️ para ti</p>
         </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>

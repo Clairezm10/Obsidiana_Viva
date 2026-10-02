@@ -1,7 +1,3 @@
-/* ===== IMPORTAR FUENTES DE GOOGLE FONTS ===== */
-@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;600;700;900&family=Lora:wght@400;600;700&display=swap');
-
-/* ===== VARIABLES DE COLOR ===== */
 :root {
     --primary-purple: #2D1B4E;
     --dark-purple: #1a0f2e;
@@ -16,7 +12,6 @@
     --error: #e74c3c;
 }
 
-/* ===== RESET Y ESTILOS GLOBALES ===== */
 * {
     margin: 0;
     padding: 0;
@@ -46,7 +41,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 20px;
 }
 
-/* ===== HEADER Y NAVEGACIÓN ===== */
 .header {
     background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-purple) 100%);
     color: white;
@@ -112,19 +106,60 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--gold);
 }
 
-/* ===== SECCIÓN HERO ===== */
+.page-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.page-video-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(45, 27, 78, 0) 0%, rgba(26, 15, 46, 0) 100%);
+}
+
+body.home {
+    background: transparent;
+}
+
+.header.header-over-video {
+    background: transparent;
+    box-shadow: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+.header.header-over-video.scrolled {
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-purple) 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
 .hero {
-    background: linear-gradient(135deg, var(--light-purple) 0%, var(--primary-purple) 100%);
+    position: relative;
+    background: transparent;
     color: white;
-    padding: 60px 20px;
+    padding: 160px 20px 80px;
     text-align: center;
-    min-height: 400px;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .hero-content {
+    position: relative;
+    z-index: 2;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -154,7 +189,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--light-gold);
 }
 
-/* ===== BOTONES ===== */
 .btn {
     padding: 12px 30px;
     border: none;
@@ -193,16 +227,15 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 18px;
 }
 
-/* ===== SECCIÓN INTRO (INDEX) ===== */
 .intro-section {
     padding: 60px 20px;
-    background-color: white;
+    background-color: rgba(26, 15, 46, 0.28);
 }
 
 .intro-section h2 {
     font-family: 'Alegreya', 'Times New Roman', serif;
     text-align: center;
-    color: var(--primary-purple);
+    color: var(--gold);
     margin-bottom: 20px;
     font-size: 40px;
     font-weight: 700;
@@ -213,7 +246,7 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 800px;
     margin: 0 auto 40px;
     font-size: 18px;
-    color: var(--text-light);
+    color: var(--light-gold);
     line-height: 1.8;
 }
 
@@ -250,16 +283,15 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.6;
 }
 
-/* ===== SECCIÓN CATEGORÍAS (INDEX) ===== */
 .categorias-section {
     padding: 60px 20px;
-    background-color: #faf9f7;
+    background-color: rgba(26, 15, 46, 0.22);
 }
 
 .categorias-section h2 {
     font-family: 'Alegreya', 'Times New Roman', serif;
     text-align: center;
-    color: var(--primary-purple);
+    color: var(--gold);
     margin-bottom: 40px;
     font-size: 40px;
     font-weight: 700;
@@ -278,14 +310,18 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 12px;
     padding: 25px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: pointer;
 }
 
 .categoria-card:hover {
     border-color: var(--gold);
-    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.3);
-    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(201, 169, 97, 0.35);
+    transform: translateY(-8px);
+}
+
+.categoria-card:hover .categoria-imagen img {
+    transform: scale(1.08);
 }
 
 .categoria-icon {
@@ -310,11 +346,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .cta-section p {
     font-size: 18px;
-    color: var(--primary-purple);
+    color: var(--light-gold);
     margin-bottom: 20px;
 }
 
-/* ===== SECCIÓN DE BÚSQUEDA Y FILTROS ===== */
 .search-section {
     padding: 50px 20px;
     background-color: white;
@@ -378,7 +413,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--primary-purple);
 }
 
-/* ===== SECCIÓN DE PRODUCTOS ===== */
 .productos-section {
     padding: 50px 20px;
     background-color: #faf9f7;
@@ -406,13 +440,17 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: pointer;
 }
 
 .producto-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(201, 169, 97, 0.3);
+    transform: translateY(-10px);
+    box-shadow: 0 14px 30px rgba(201, 169, 97, 0.35);
+}
+
+.producto-card:hover .producto-imagen img {
+    transform: scale(1.1);
 }
 
 .producto-imagen {
@@ -429,6 +467,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .producto-info {
@@ -481,7 +520,6 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
-/* ===== SECCIÓN ABOUT HERO ===== */
 .about-hero {
     background: linear-gradient(135deg, var(--primary-purple) 0%, var(--light-purple) 100%);
     color: white;
@@ -502,7 +540,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--light-gold);
 }
 
-/* ===== SECCIÓN HISTORIA ===== */
 .historia-section {
     padding: 60px 20px;
     background-color: white;
@@ -538,7 +575,6 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* ===== SECCIÓN MISIÓN Y VISIÓN ===== */
 .mision-vision {
     padding: 60px 20px;
     background-color: #faf9f7;
@@ -575,7 +611,6 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.8;
 }
 
-/* ===== SECCIÓN VALORES ===== */
 .valores-section {
     padding: 60px 20px;
     background-color: white;
@@ -642,7 +677,6 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.6;
 }
 
-/* ===== SECCIÓN MATERIALES ===== */
 .materiales-section {
     padding: 60px 20px;
     background: linear-gradient(135deg, var(--light-purple) 0%, var(--primary-purple) 100%);
@@ -719,7 +753,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 15px 15px 15px;
 }
 
-/* ===== SECCIÓN CONTACTO HERO ===== */
 .contacto-hero {
     background: linear-gradient(135deg, var(--primary-purple) 0%, var(--light-purple) 100%);
     color: white;
@@ -740,7 +773,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--light-gold);
 }
 
-/* ===== INFORMACIÓN CONTACTO ===== */
 .info-contacto {
     padding: 60px 20px;
     background-color: white;
@@ -782,7 +814,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 16px;
 }
 
-/* ===== FORMULARIO CONTACTO ===== */
 .formulario-contacto {
     padding: 60px 20px;
     background-color: #faf9f7;
@@ -840,7 +871,6 @@ h1, h2, h3, h4, h5, h6 {
     resize: vertical;
 }
 
-/* ===== SECCIÓN REDES SOCIALES ===== */
 .redes-sociales {
     padding: 60px 20px;
     background: linear-gradient(135deg, var(--primary-purple) 0%, var(--light-purple) 100%);
@@ -886,7 +916,6 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 5px 15px rgba(201, 169, 97, 0.4);
 }
 
-/* ===== FOOTER ===== */
 .footer {
     background-color: var(--dark-purple);
     color: white;
@@ -894,12 +923,53 @@ h1, h2, h3, h4, h5, h6 {
     padding: 20px;
 }
 
+body.home .footer {
+    background-color: rgba(26, 15, 46, 0.65);
+}
+
 .footer p {
     margin: 5px 0;
     font-size: 14px;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
+.categoria-imagen {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--light-gold) 0%, var(--cream) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.categoria-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+
 @media (max-width: 768px) {
     .header .container {
         flex-direction: column;
@@ -920,6 +990,11 @@ h1, h2, h3, h4, h5, h6 {
 
     .logo-section h1 {
         font-size: 24px;
+    }
+
+    .hero {
+        padding-top: 240px;
+        min-height: 100vh;
     }
 
     .hero-text h2 {

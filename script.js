@@ -281,9 +281,8 @@ const contactoForm = document.getElementById('contacto-form');
 
 // ===== FUNCIONES PRINCIPALES =====
 
-// Renderizar productos
 function renderizarProductos(productosAMostrar = productos) {
-    if (!productosGrid) return; // Si no existe la página de productos, no hacer nada
+    if (!productosGrid) return;
 
     productosGrid.innerHTML = '';
 
@@ -292,10 +291,11 @@ function renderizarProductos(productosAMostrar = productos) {
         return;
     }
 
-    productosAMostrar.forEach(producto => {
+    productosAMostrar.forEach((producto, index) => {
         const productoCard = document.createElement('div');
-        productoCard.className = 'producto-card';
-        
+        const delayClass = `reveal-delay-${(index % 6) + 1}`;
+        productoCard.className = `producto-card reveal ${delayClass}`;
+
         const stockClass = producto.stock < 5 ? 'stock-bajo' : 'stock-disponible';
         const stockText = producto.stock < 5 ? `¡Solo ${producto.stock} disponibles!` : `${producto.stock} disponibles`;
 
@@ -314,18 +314,17 @@ function renderizarProductos(productosAMostrar = productos) {
 
         productosGrid.appendChild(productoCard);
     });
+
+    observarElementos();
 }
 
-// Filtrar productos
 function filtrarProductos() {
     let productosFiltrados = productos;
 
-    // Filtrar por categoría
     if (categoriaActual !== 'todas') {
         productosFiltrados = productosFiltrados.filter(p => p.categoria === categoriaActual);
     }
 
-    // Filtrar por búsqueda
     if (buscador) {
         const terminoBusqueda = buscador.value.toLowerCase();
         if (terminoBusqueda) {
@@ -340,8 +339,6 @@ function filtrarProductos() {
 }
 
 // ===== EVENT LISTENERS =====
-
-// Filtros por categoría
 filtrosBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         filtrosBtns.forEach(b => b.classList.remove('activo'));
@@ -351,12 +348,10 @@ filtrosBtns.forEach(btn => {
     });
 });
 
-// Búsqueda
 if (buscador) {
     buscador.addEventListener('input', filtrarProductos);
 }
 
-// Formulario de contacto
 if (contactoForm) {
     contactoForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -365,7 +360,49 @@ if (contactoForm) {
     });
 }
 
+// ===== ANIMACIONES AL HACER SCROLL =====
+function observarElementos() {
+    const elementos = document.querySelectorAll('.reveal:not(.visible)');
+
+    if (elementos.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    elementos.forEach(el => observer.observe(el));
+}
+
 // ===== INICIALIZACIÓN =====
 if (productosGrid) {
     renderizarProductos();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    observarElementos();
+
+    const header = document.querySelector('.header-over-video');
+    if (header) {
+        const onScroll = () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        heroVideo.pause();
+        heroVideo.removeAttribute('autoplay');
+    }
+});
+
+observarElementos();
