@@ -19,7 +19,8 @@
                 <h1>OBSIDIANA VIVA</h1>
                 <p class="tagline">Joyería Artesanal de Lujo</p>
             </div>
-            <nav class="navbar">
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-navigation"><span aria-hidden="true">☰</span><span class="sr-only">Abrir menú</span></button>
+            <nav class="navbar" id="site-navigation" aria-label="Navegación principal">
                 <ul>
                     <li><a href="index.html" class="nav-link" aria-current="page">Inicio</a></li>
                     <li><a href="productos.html" class="nav-link">Productos</a></li>
@@ -38,6 +39,15 @@
                 <p>Descubre nuestras colecciones exclusivas de joyas finas</p>
                 <a href="productos.html" class="btn btn-primary">Explorar Catálogo</a>
             </div>
+        </div>
+    </section>
+
+    <section class="destacados-section">
+        <div class="container">
+            <h2 class="reveal">Joyas destacadas</h2>
+            <p class="destacados-intro reveal reveal-delay-1">Conoce algunas piezas favoritas y consulta su precio desde el inicio.</p>
+            <div id="destacados-grid" class="destacados-grid"></div>
+            <p class="datos-demo">Precios de demostración. Tasa ilustrativa: 1 USD = 0,92 EUR; no representa el tipo de cambio actual.</p>
         </div>
     </section>
 
@@ -67,6 +77,18 @@
                     <h3>💜 Elegancia</h3>
                     <p>Sofisticación y estilo en cada colección</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonios-section">
+        <div class="container">
+            <h2 class="reveal">Lo que dicen nuestros clientes</h2>
+            <p class="testimonios-aviso reveal reveal-delay-1">Testimonios ficticios de ejemplo para este proyecto escolar.</p>
+            <div class="testimonios-grid">
+                <article class="testimonio-card reveal reveal-delay-1"><p>“El diseño y el acabado de mi collar son preciosos. Se nota el cuidado en cada detalle.”</p><h3>— Valeria M.</h3><p class="estrellas" aria-label="5 de 5 estrellas">★★★★★</p></article>
+                <article class="testimonio-card reveal reveal-delay-2"><p>“Encontré una pieza muy especial y el catálogo fue fácil de explorar.”</p><h3>— Daniela R.</h3><p class="estrellas" aria-label="5 de 5 estrellas">★★★★★</p></article>
+                <article class="testimonio-card reveal reveal-delay-3"><p>“Me encantó la combinación de materiales y el estilo artesanal de las joyas.”</p><h3>— Andrea C.</h3><p class="estrellas" aria-label="5 de 5 estrellas">★★★★★</p></article>
             </div>
         </div>
     </section>
@@ -131,6 +153,7 @@
             <p>Hecho con ❤️ para ti</p>
         </div>
     </footer>
+    <a class="whatsapp-float" href="https://wa.me/?text=Hola%2C%20me%20interesan%20las%20joyas%20de%20Obsidiana%20Viva.%20%C2%BFPodr%C3%ADan%20darme%20m%C3%A1s%20informaci%C3%B3n%3F" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp y elegir destinatario"><span aria-hidden="true">☏</span><span>WhatsApp</span></a>
 
     <script src="script.js"></script>
 </body>

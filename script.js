@@ -284,9 +284,56 @@ const productosGrid = document.getElementById('productos-grid');
 const buscador = document.getElementById('buscador');
 const filtrosBtns = document.querySelectorAll('.filtro-btn');
 const contactoForm = document.getElementById('contacto-form');
-const reservaForm = document.getElementById('reserva-form');
 const productoDialog = document.getElementById('producto-dialog');
 let productoActivoDialog = null;
+const tasaEuroDemo = 0.92;
+
+function formatearPrecioUSD(precioUSD) {
+    return `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(precioUSD)} USD`;
+}
+
+function formatearPrecioEUR(precioUSD) {
+    return `≈ ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(precioUSD * tasaEuroDemo)}`;
+}
+
+function enlaceCompraWhatsapp(producto = null) {
+    const mensaje = producto
+        ? `¡Hola! Me interesa ${producto.nombre} de Obsidiana Viva. ¿Podrían darme más información?`
+        : '¡Hola! Me interesan las joyas de Obsidiana Viva. ¿Podrían darme más información?';
+    return `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+}
+
+function renderizarDestacados() {
+    const grid = document.getElementById('destacados-grid');
+    if (!grid) return;
+    [4, 8, 29].map(id => productos.find(producto => producto.id === id)).filter(Boolean).forEach((producto, index) => {
+        const tarjeta = document.createElement('article');
+        tarjeta.className = `destacado-card reveal reveal-delay-${index + 1}`;
+        tarjeta.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}" onerror="this.style.display='none'"><div class="destacado-info"><h3>${producto.nombre}</h3><p>${producto.descripcion}</p><p class="producto-precio">${formatearPrecioUSD(producto.precio)}</p><p class="producto-precio-eur">${formatearPrecioEUR(producto.precio)}</p><a class="btn btn-primary" href="${enlaceCompraWhatsapp(producto)}" target="_blank" rel="noopener noreferrer">Reservar ahora</a><a class="btn btn-secondary" href="productos.html">Ver en el catálogo</a></div>`;
+        grid.appendChild(tarjeta);
+    });
+    observarElementos();
+}
+
+renderizarDestacados();
+
+document.querySelectorAll('.menu-toggle').forEach(button => {
+    const nav = document.getElementById(button.getAttribute('aria-controls'));
+    if (!nav) return;
+    const cerrarMenu = () => {
+        nav.classList.remove('menu-open');
+        button.setAttribute('aria-expanded', 'false');
+        button.querySelector('.sr-only').textContent = 'Abrir menú';
+    };
+    button.addEventListener('click', () => {
+        const abierto = button.getAttribute('aria-expanded') === 'true';
+        nav.classList.toggle('menu-open', !abierto);
+        button.setAttribute('aria-expanded', String(!abierto));
+        button.querySelector('.sr-only').textContent = abierto ? 'Abrir menú' : 'Cerrar menú';
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', cerrarMenu));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') cerrarMenu(); });
+});
 
 // ===== FUNCIONES PRINCIPALES =====
 
@@ -313,8 +360,12 @@ function renderizarProductos(productosAMostrar = productos) {
             <div class="producto-info">
                 <p class="producto-categoria">${producto.categoria}</p>
                 <h3 class="producto-nombre">${producto.nombre}</h3>
-                <p class="producto-precio">$${producto.precio.toFixed(2)}</p>
-                <button type="button" class="btn btn-secondary ver-detalles" data-detalles="${producto.id}" aria-haspopup="dialog">Ver detalles</button>
+                <p class="producto-precio">${formatearPrecioUSD(producto.precio)}</p>
+                <p class="producto-precio-eur">${formatearPrecioEUR(producto.precio)}</p>
+                <div class="producto-acciones">
+                    <a class="btn btn-primary" href="${enlaceCompraWhatsapp(producto)}" target="_blank" rel="noopener noreferrer">Reservar ahora</a>
+                    <button type="button" class="btn btn-secondary ver-detalles" data-detalles="${producto.id}" aria-haspopup="dialog">Ver detalles</button>
+                </div>
             </div>
         `;
 
@@ -360,7 +411,9 @@ function abrirDetallesProducto(id) {
     document.getElementById('dialog-producto-categoria').textContent = producto.categoria;
     document.getElementById('dialog-producto-nombre').textContent = producto.nombre;
     document.getElementById('dialog-producto-descripcion').textContent = producto.descripcion;
-    document.getElementById('dialog-producto-precio').textContent = `$${producto.precio.toFixed(2)}`;
+    document.getElementById('dialog-producto-precio').textContent = formatearPrecioUSD(producto.precio);
+    document.getElementById('dialog-producto-precio-eur').textContent = formatearPrecioEUR(producto.precio);
+    document.getElementById('dialog-reservar-ahora').href = enlaceCompraWhatsapp(producto);
     document.getElementById('dialog-producto-stock').innerHTML = `<span class="${stockClass}">${stockText}</span>`;
 
     const tallas = document.getElementById('dialog-tallas');
@@ -381,7 +434,6 @@ function abrirDetallesProducto(id) {
     botonFavorito.textContent = esFavorito ? '♥ En favoritos' : '♡ Agregar a Favoritos';
     botonFavorito.classList.toggle('guardado', esFavorito);
     botonFavorito.setAttribute('aria-pressed', String(esFavorito));
-    document.getElementById('dialog-reservar').href = `reservar.html?producto=${producto.id}`;
     productoDialog.showModal();
 }
 
@@ -401,16 +453,6 @@ document.getElementById('dialog-favorito')?.addEventListener('click', event => {
     boton.textContent = esFavorito ? '♥ En favoritos' : '♡ Agregar a Favoritos';
     boton.classList.toggle('guardado', esFavorito);
     boton.setAttribute('aria-pressed', String(esFavorito));
-});
-
-document.getElementById('dialog-reservar')?.addEventListener('click', event => {
-    if (!productoActivoDialog) return;
-    const parametros = new URLSearchParams({ producto: String(productoActivoDialog.id) });
-    const tallaSeleccionada = productoDialog.querySelector('[data-talla][aria-pressed="true"]');
-    const colorSeleccionado = document.getElementById('dialog-color-select').value;
-    if (tallaSeleccionada) parametros.set('talla', tallaSeleccionada.dataset.talla);
-    if (colorSeleccionado) parametros.set('color', colorSeleccionado);
-    event.currentTarget.href = `reservar.html?${parametros.toString()}`;
 });
 
 function normalizar(texto) {
@@ -494,24 +536,6 @@ if (contactoForm) {
         e.preventDefault();
         alert('Gracias por tu interés. Este formulario es una demostración escolar y no envía mensajes.');
         contactoForm.reset();
-    });
-}
-
-if (reservaForm) {
-    const parametrosReserva = new URLSearchParams(window.location.search);
-    const productoParam = Number(parametrosReserva.get('producto'));
-    const producto = productos.find(p => p.id === productoParam);
-    const elegido = document.getElementById('producto-reserva');
-    if (producto && elegido) elegido.value = producto.nombre;
-    const tallaReserva = document.getElementById('reserva-talla');
-    const colorReserva = document.getElementById('reserva-color');
-    if (tallaReserva) tallaReserva.value = parametrosReserva.get('talla') || '';
-    if (colorReserva) colorReserva.value = parametrosReserva.get('color') || '';
-    reservaForm.addEventListener('submit', e => {
-        e.preventDefault();
-        alert('Tu solicitud de reserva quedó registrada en esta demostración. No se envió información.');
-        reservaForm.reset();
-        if (producto && elegido) elegido.value = producto.nombre;
     });
 }
 

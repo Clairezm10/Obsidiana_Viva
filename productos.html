@@ -17,7 +17,8 @@
                 <h1>OBSIDIANA VIVA</h1>
                 <p class="tagline">Joyería Artesanal de Lujo</p>
             </div>
-            <nav class="navbar">
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-navigation"><span aria-hidden="true">☰</span><span class="sr-only">Abrir menú</span></button>
+            <nav class="navbar" id="site-navigation" aria-label="Navegación principal">
                 <ul>
                     <li><a href="index.html" class="nav-link">Inicio</a></li>
                     <li><a href="productos.html" class="nav-link" aria-current="page">Productos</a></li>
@@ -72,6 +73,7 @@
                 <h2 id="dialog-producto-nombre"></h2>
                 <p id="dialog-producto-descripcion"></p>
                 <p id="dialog-producto-precio" class="producto-precio"></p>
+                <p id="dialog-producto-precio-eur" class="producto-precio-eur"></p>
                 <p id="dialog-producto-stock" class="producto-stock"></p>
                 <fieldset class="dialog-variantes">
                     <legend>Talla o medida</legend>
@@ -85,8 +87,8 @@
                 </div>
                 <p class="variante-ayuda">Opciones de ejemplo para este proyecto. Todas están disponibles.</p>
                 <div class="producto-acciones">
+                    <a class="btn btn-primary" id="dialog-reservar-ahora" href="https://wa.me/?text=Hola" target="_blank" rel="noopener noreferrer">Reservar ahora</a>
                     <button type="button" class="btn btn-favorito" id="dialog-favorito" aria-pressed="false">♡ Agregar a Favoritos</button>
-                    <a class="btn btn-primary" id="dialog-reservar" href="reservar.html">Reservar</a>
                 </div>
             </div>
         </div>
@@ -99,6 +101,7 @@
             <p>Hecho con ❤️ para ti</p>
         </div>
     </footer>
+    <a class="whatsapp-float" href="https://wa.me/?text=Hola%2C%20me%20interesan%20las%20joyas%20de%20Obsidiana%20Viva.%20%C2%BFPodr%C3%ADan%20darme%20m%C3%A1s%20informaci%C3%B3n%3F" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp y elegir destinatario"><span aria-hidden="true">☏</span><span>WhatsApp</span></a>
 
     <script src="script.js"></script>
 </body>

@@ -6,7 +6,7 @@
     --light-gold: #E8D5B7;
     --cream: #F5EFE0;
     --text-dark: #2D1B4E;
-    --text-light: #666;
+    --text-light: #4b4b4b;
     --border-color: #ddd;
     --success: #27ae60;
     --error: #e74c3c;
@@ -124,6 +124,30 @@ h1, h2, h3, h4, h5, h6 {
     min-height: 42px;
 }
 .motion-toggle:hover, .motion-toggle[aria-pressed="true"] { background: var(--gold); color: #000; }
+
+.menu-toggle { display: none; border: 2px solid var(--gold); border-radius: 8px; background: var(--dark-purple); color: #fff; min-width: 46px; min-height: 44px; font-size: 22px; cursor: pointer; }
+.whatsapp-float { position: fixed; right: 22px; bottom: 22px; z-index: 110; display: flex; align-items: center; gap: 8px; padding: 12px 18px; border: 0; border-radius: 999px; color: #fff; background: #176b45; box-shadow: 0 5px 18px #0005; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.whatsapp-float span:first-child { font-size: 22px; }
+.whatsapp-float:hover { background: #115637; transform: translateY(-2px); }
+
+.destacados-section, .testimonios-section { padding: 56px 20px; background-color: rgba(26, 15, 46, 0.28); color: #fff; }
+.destacados-section h2, .testimonios-section h2 { text-align: center; color: var(--gold); font-size: 36px; margin-bottom: 10px; }
+.destacados-intro, .testimonios-aviso { text-align: center; color: var(--light-gold); margin-bottom: 26px; }
+.destacados-section .datos-demo { color: var(--light-gold); }
+.destacados-grid, .testimonios-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.destacado-card, .testimonio-card { background: #fff; border: 1px solid #d8d2df; border-radius: 14px; overflow: hidden; box-shadow: 0 5px 18px #24143d14; }
+.destacado-card img { display: block; width: 100%; height: 210px; object-fit: cover; background: var(--cream); transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.destacado-info .btn { display: block; width: 100%; text-align: center; margin-top: 12px; }
+.destacado-info { padding: 18px; }
+.destacado-info h3, .testimonio-card h3 { color: var(--primary-purple); }
+.destacado-info p { color: #4b4b4b; }
+.destacado-info .producto-precio { margin: 8px 0 14px; }
+.producto-precio-eur { margin: -10px 0 14px; color: #735c91; font-size: 15px; font-weight: 600; }
+.destacado-info .producto-precio-eur { margin: -10px 0 14px; }
+.testimonio-card { padding: 22px; }
+.testimonio-card > p:first-child { min-height: 78px; color: #333; }
+.testimonio-card h3 { margin-top: 14px; font-size: 16px; }
+.testimonio-card .estrellas { color: #735000; letter-spacing: 2px; margin-top: 8px; }
 
 .page-video {
     position: fixed;
@@ -498,10 +522,10 @@ body.has-video { background: transparent; }
 .tallas-opciones { display: flex; flex-wrap: wrap; gap: 8px; }
 .talla-opcion { min-width: 48px; min-height: 42px; padding: 7px 12px; border: 1px solid #888; border-radius: 8px; background: #fff; color: var(--primary-purple); font: inherit; cursor: pointer; }
 .talla-opcion.seleccionada { background: var(--primary-purple); border-color: var(--primary-purple); color: #fff; box-shadow: 0 0 0 2px var(--gold); }
-.talla-opcion:disabled { color: #888; background: #e6e6e6; border-color: #ccc; cursor: not-allowed; text-decoration: line-through; }
+.talla-opcion:disabled { color: #555; background: #e6e6e6; border-color: #ccc; cursor: not-allowed; text-decoration: line-through; }
 .producto-variante { margin: 16px 0; }
 .producto-variante select { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid #888; border-radius: 6px; background: #fff; color: #222; font: inherit; }
-.producto-variante option:disabled { color: #999; }
+.producto-variante option:disabled { color: #555; }
 .variante-ayuda { color: #555; font-size: 13px; }
 .producto-stock.detalle-stock { margin-top: 12px; }
 
@@ -1032,6 +1056,10 @@ body.home .footer {
     transform: translateY(0);
 }
 
+.destacado-card { transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease; }
+.destacado-card:hover { border-color: var(--gold); box-shadow: 0 12px 28px rgba(201, 169, 97, 0.4); transform: translateY(-8px); }
+.destacado-card:hover img { transform: scale(1.08); }
+
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
@@ -1041,24 +1069,19 @@ body.home .footer {
 
 @media (max-width: 768px) {
     .header .container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .navbar ul {
-        gap: 8px 14px;
-        font-size: 13px;
         flex-direction: row;
-        justify-content: center;
         flex-wrap: wrap;
-        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
     }
 
-    .navbar a {
-        display: inline-block;
-        text-align: center;
-        padding: 8px 4px;
-    }
+    .header .logo-section { flex: 1 1 calc(100% - 56px); }
+    .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+    .navbar { display: none; position: absolute; top: calc(100% + 10px); right: 0; z-index: 120; width: min(300px, calc(100vw - 32px)); padding: 16px; border: 1px solid var(--gold); border-radius: 12px; background: var(--dark-purple); box-shadow: 0 12px 28px #0007; }
+    .navbar.menu-open { display: block; }
+    .navbar ul { flex-direction: column; align-items: stretch; gap: 4px; width: 100%; }
+    .navbar a { display: block; text-align: left; padding: 12px; font-size: 16px; }
 
     .logo-section h1 {
         font-size: 24px;
@@ -1118,9 +1141,14 @@ body.home .footer {
     .logo-section { gap: 8px; }
     .logo { width: 38px; height: 46px; }
     .logo-section h1 { letter-spacing: 1px; }
-    .motion-toggle { width: 100%; max-width: 280px; }
-    .logo-section { flex-wrap: wrap; justify-content: center; }
+    .motion-toggle { width: auto; max-width: 280px; }
+    .logo-section { flex-wrap: wrap; justify-content: flex-start; }
     .tagline { flex-basis: 100%; text-align: center; }
+}
+
+@media (max-width: 640px) {
+    .destacados-grid, .testimonios-grid { grid-template-columns: 1fr; }
+    .destacado-card img { height: 230px; }
 }
 
 @media (max-width: 480px) {
@@ -1135,6 +1163,8 @@ body.home .footer {
     .tagline {
         display: block;
     }
+
+    .motion-toggle { padding: 7px 8px; font-size: 11px; }
 
     .hero-text h2 {
         font-size: 28px;
